@@ -5,5 +5,7 @@ const withNextIntl = createNextIntlPlugin('./i18n.ts');
 module.exports = withNextIntl({
   reactStrictMode: true,
   output: 'standalone',
-  serverExternalPackages: ['pdfkit', 'fontkit', 'restructure', 'iconv-lite']
+  experimental: {
+    serverComponentsExternalPackages: ['pdfkit', 'fontkit', 'restructure', 'iconv-lite']
+  }
 });

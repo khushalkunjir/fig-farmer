@@ -1,5 +1,4 @@
 import {NextResponse} from 'next/server';
-import PDFDocument from 'pdfkit';
 import {getDailyReport, getMonthlySummary, getVendorTotals} from '@/lib/report';
 import {connectToDatabase} from '@/lib/db';
 import Vendor from '@/models/Vendor';
@@ -7,8 +6,10 @@ import {formatDate} from '@/lib/utils';
 import {getMessages, normalizeLocale} from '@/lib/messages';
 
 export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request) {
+  const {default: PDFDocument} = await import('pdfkit');
   const url = new URL(request.url);
   const type = url.searchParams.get('type') || 'daily';
   const locale = normalizeLocale(url.searchParams.get('locale') || undefined);
