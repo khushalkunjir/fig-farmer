@@ -1,0 +1,35 @@
+{
+  "name": "fig-farmer",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "seed": "tsx scripts/seed.ts"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "csv-stringify": "^6.5.1",
+    "dotenv": "^16.4.5",
+    "jose": "^5.2.4",
+    "mongoose": "^8.10.0",
+    "next": "^14.2.5",
+    "next-intl": "^3.19.4",
+    "pdfkit": "^0.15.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.41",
+    "tailwindcss": "^3.4.10",
+    "tsx": "^4.17.0",
+    "typescript": "^5.5.4"
+  }
+}

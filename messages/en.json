@@ -1,0 +1,121 @@
+﻿{
+  "nav": {
+    "title": "Fig Farmer",
+    "dashboard": "Dashboard",
+    "vendors": "Vendors",
+    "boxTypes": "Box Types",
+    "harvest": "Harvest",
+    "sales": "Sales",
+    "pending": "Pending",
+    "reports": "Reports",
+    "logout": "Logout"
+  },
+  "common": {
+    "add": "Add",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "notes": "Notes",
+    "date": "Date",
+    "status": "Status",
+    "actions": "Actions",
+    "totalBoxes": "Total Boxes",
+    "totalQuantity": "Total Quantity",
+    "amount": "Amount",
+    "confirm": "Confirm",
+    "loading": "Loading...",
+    "noData": "No data",
+    "exportCsv": "Export CSV",
+    "exportPdf": "Export PDF"
+  },
+  "login": {
+    "title": "Admin Login",
+    "subtitle": "Sign in to manage your fig farm",
+    "identifier": "Username or Email",
+    "password": "Password",
+    "login": "Login",
+    "signup": "Create Admin Account",
+    "noAdmin": "First-time setup: create the admin account",
+    "error": "Please check your credentials"
+  },
+  "dashboard": {
+    "title": "Today Overview",
+    "packedTotals": "Today Packed",
+    "soldTotals": "Today Sold",
+    "pendingCount": "Pending Confirmations",
+    "monthConfirmed": "This Month Confirmed Amount",
+    "quickActions": "Quick Actions",
+    "newHarvest": "New Harvest Entry",
+    "newSale": "New Sale Entry",
+    "viewPending": "View Pending"
+  },
+  "vendors": {
+    "title": "Vendors",
+    "name": "Name",
+    "phone": "Phone",
+    "location": "Location",
+    "notes": "Notes",
+    "details": "Vendor Details",
+    "salesHistory": "Sales History",
+    "pending": "Pending Confirmations",
+    "totals": "Totals"
+  },
+  "boxTypes": {
+    "title": "Box Types",
+    "name": "Name",
+    "defaultQtyPerBox": "Default Qty / Box"
+  },
+  "harvest": {
+    "title": "Harvest Entries",
+    "newEntry": "New Harvest Entry",
+    "boxType": "Box Type",
+    "qtyPerBox": "Qty / Box",
+    "boxCount": "Box Count",
+    "items": "Line Items",
+    "filter": "Filter by Date"
+  },
+  "sales": {
+    "title": "Sales",
+    "newEntry": "New Sale Entry",
+    "boxType": "Box Type",
+    "qtyPerBox": "Qty / Box",
+    "boxCount": "Box Count",
+    "vendor": "Vendor",
+    "expectedAmount": "Expected Amount",
+    "finalAmount": "Final Amount",
+    "statusPending": "Pending",
+    "statusConfirmed": "Confirmed",
+    "filter": "Filters"
+  },
+  "pending": {
+    "title": "Pending Confirmations",
+    "confirmSale": "Confirm Sale",
+    "confirmationDate": "Confirmation Date"
+  },
+  "reports": {
+    "title": "Reports",
+    "daily": "Daily Summary",
+    "monthly": "Monthly Summary",
+    "vendorTotals": "Vendor Totals",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "month": "Month",
+    "year": "Year"
+  },
+  "validation": {
+    "required": "This field is required",
+    "positive": "Enter a positive number",
+    "invalid": "Invalid input"
+  },
+  "export": {
+    "daily": "Daily Report",
+    "monthly": "Monthly Summary",
+    "date": "Date",
+    "vendor": "Vendor",
+    "totalAmount": "Total Amount",
+    "vendorTotals": "Vendor Totals",
+    "month": "Month"
+  }
+}

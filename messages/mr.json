@@ -1,0 +1,121 @@
+﻿{
+  "nav": {
+    "title": "अंजीर शेत",
+    "dashboard": "डॅशबोर्ड",
+    "vendors": "विक्रेते",
+    "boxTypes": "बॉक्स प्रकार",
+    "harvest": "तोडणी",
+    "sales": "विक्री",
+    "pending": "प्रलंबित",
+    "reports": "अहवाल",
+    "logout": "लॉगआउट"
+  },
+  "common": {
+    "add": "जोडा",
+    "save": "जतन करा",
+    "cancel": "रद्द करा",
+    "delete": "हटवा",
+    "edit": "संपादन",
+    "search": "शोधा",
+    "notes": "टिपा",
+    "date": "तारीख",
+    "status": "स्थिती",
+    "actions": "क्रिया",
+    "totalBoxes": "एकूण बॉक्स",
+    "totalQuantity": "एकूण प्रमाण",
+    "amount": "रक्कम",
+    "confirm": "पुष्टी करा",
+    "loading": "लोड होत आहे...",
+    "noData": "माहिती नाही",
+    "exportCsv": "CSV निर्यात",
+    "exportPdf": "PDF निर्यात"
+  },
+  "login": {
+    "title": "प्रशासक लॉगिन",
+    "subtitle": "अंजीर शेत व्यवस्थापनासाठी लॉगिन करा",
+    "identifier": "युजरनेम किंवा ईमेल",
+    "password": "पासवर्ड",
+    "login": "लॉगिन",
+    "signup": "प्रशासक खाते तयार करा",
+    "noAdmin": "पहिल्यांदा सेटअप: प्रशासक खाते तयार करा",
+    "error": "कृपया माहिती तपासा"
+  },
+  "dashboard": {
+    "title": "आजचे सारांश",
+    "packedTotals": "आज पॅक केलेले",
+    "soldTotals": "आज विकलेले",
+    "pendingCount": "प्रलंबित पुष्टी",
+    "monthConfirmed": "या महिन्याची पुष्टी रक्कम",
+    "quickActions": "त्वरित क्रिया",
+    "newHarvest": "नवीन तोडणी नोंद",
+    "newSale": "नवीन विक्री नोंद",
+    "viewPending": "प्रलंबित पहा"
+  },
+  "vendors": {
+    "title": "विक्रेते",
+    "name": "नाव",
+    "phone": "फोन",
+    "location": "ठिकाण",
+    "notes": "टिपा",
+    "details": "विक्रेता तपशील",
+    "salesHistory": "विक्री इतिहास",
+    "pending": "प्रलंबित पुष्टी",
+    "totals": "एकूण"
+  },
+  "boxTypes": {
+    "title": "बॉक्स प्रकार",
+    "name": "नाव",
+    "defaultQtyPerBox": "प्रति बॉक्स प्रमाण"
+  },
+  "harvest": {
+    "title": "तोडणी नोंदी",
+    "newEntry": "नवीन तोडणी नोंद",
+    "boxType": "बॉक्स प्रकार",
+    "qtyPerBox": "प्रति बॉक्स प्रमाण",
+    "boxCount": "बॉक्स संख्या",
+    "items": "लाइन आयटम",
+    "filter": "तारीख निवडा"
+  },
+  "sales": {
+    "title": "विक्री",
+    "newEntry": "नवीन विक्री नोंद",
+    "boxType": "बॉक्स प्रकार",
+    "qtyPerBox": "प्रति बॉक्स प्रमाण",
+    "boxCount": "बॉक्स संख्या",
+    "vendor": "विक्रेता",
+    "expectedAmount": "अपेक्षित रक्कम",
+    "finalAmount": "अंतिम रक्कम",
+    "statusPending": "प्रलंबित",
+    "statusConfirmed": "पुष्टी",
+    "filter": "फिल्टर"
+  },
+  "pending": {
+    "title": "प्रलंबित पुष्टी",
+    "confirmSale": "विक्री पुष्टी",
+    "confirmationDate": "पुष्टी तारीख"
+  },
+  "reports": {
+    "title": "अहवाल",
+    "daily": "दैनिक सारांश",
+    "monthly": "मासिक सारांश",
+    "vendorTotals": "विक्रेत्यानुसार",
+    "startDate": "सुरुवात तारीख",
+    "endDate": "शेवट तारीख",
+    "month": "महिना",
+    "year": "वर्ष"
+  },
+  "validation": {
+    "required": "हे आवश्यक आहे",
+    "positive": "सकारात्मक संख्या द्या",
+    "invalid": "अवैध माहिती"
+  },
+  "export": {
+    "daily": "दैनिक अहवाल",
+    "monthly": "मासिक सारांश",
+    "date": "तारीख",
+    "vendor": "विक्रेता",
+    "totalAmount": "एकूण रक्कम",
+    "vendorTotals": "विक्रेत्यानुसार",
+    "month": "महिना"
+  }
+}

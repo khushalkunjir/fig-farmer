@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-fig-50 text-fig-900;
+  font-family: "Merriweather", "Georgia", serif;
+}
+
+input, select, textarea {
+  @apply rounded-md border border-fig-200 px-3 py-2 text-sm;
+}
+
+label {
+  @apply text-sm font-medium text-fig-800;
+}
+
+.table {
+  @apply w-full border-collapse rounded-md overflow-hidden;
+}
+
+.table th {
+  @apply bg-fig-200 text-left text-sm font-semibold text-fig-900 px-3 py-2;
+}
+
+.table td {
+  @apply border-t border-fig-200 px-3 py-2 text-sm;
+}
+
+.card {
+  @apply rounded-lg bg-white shadow-sm border border-fig-100;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-semibold;
+}
+
+.btn-primary {
+  @apply bg-fig-600 text-white hover:bg-fig-700;
+}
+
+.btn-secondary {
+  @apply bg-white border border-fig-300 text-fig-900 hover:bg-fig-100;
+}
+
+.btn-danger {
+  @apply bg-red-600 text-white hover:bg-red-700;
+}
+
+.badge {
+  @apply inline-flex items-center rounded-full px-2 py-1 text-xs font-semibold;
+}
+
+.badge-pending {
+  @apply bg-yellow-100 text-yellow-800;
+}
+
+.badge-confirmed {
+  @apply bg-green-100 text-green-800;
+}
