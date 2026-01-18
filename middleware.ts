@@ -1,7 +1,6 @@
 import type {NextRequest} from 'next/server';
 import {NextResponse} from 'next/server';
 import {locales, defaultLocale} from './lib/locales';
-import {verifyAuthToken} from './lib/auth';
 
 const publicPaths = ['/login'];
 
@@ -28,10 +27,6 @@ export async function middleware(request: NextRequest) {
     if (!token) {
       return new NextResponse('Unauthorized', {status: 401});
     }
-    const isValid = await verifyAuthToken(token);
-    if (!isValid) {
-      return new NextResponse('Unauthorized', {status: 401});
-    }
     return NextResponse.next();
   }
 
@@ -50,25 +45,15 @@ export async function middleware(request: NextRequest) {
   if (isPublicPath(pathname)) {
     const token = request.cookies.get('auth')?.value;
     if (token) {
-      const isValid = await verifyAuthToken(token);
-      if (isValid) {
-        const url = request.nextUrl.clone();
-        url.pathname = `/${locale}`;
-        return NextResponse.redirect(url);
-      }
+      const url = request.nextUrl.clone();
+      url.pathname = `/${locale}`;
+      return NextResponse.redirect(url);
     }
     return NextResponse.next({request: {headers: requestHeaders}});
   }
 
   const token = request.cookies.get('auth')?.value;
   if (!token) {
-    const url = request.nextUrl.clone();
-    url.pathname = `/${locale}/login`;
-    return NextResponse.redirect(url);
-  }
-
-  const isValid = await verifyAuthToken(token);
-  if (!isValid) {
     const url = request.nextUrl.clone();
     url.pathname = `/${locale}/login`;
     return NextResponse.redirect(url);
