@@ -73,12 +73,6 @@ export default function ReportsPage({params}: {params: {locale: string}}) {
         >
           {common('exportCsv')}
         </a>
-        <a
-          className="btn btn-secondary"
-          href={`/api/reports/pdf?type=daily&start=${start}&end=${end}&locale=${params.locale}`}
-        >
-          {common('exportPdf')}
-        </a>
       </div>
 
       <div className="card flex flex-col gap-3 p-4">
@@ -112,12 +106,6 @@ export default function ReportsPage({params}: {params: {locale: string}}) {
             >
               {common('exportCsv')}
             </Button>
-            <Button
-              variant="secondary"
-              onClick={() => window.open(`/api/reports/pdf?type=monthly&year=${year}&locale=${params.locale}`)}
-            >
-              {common('exportPdf')}
-            </Button>
           </div>
         </div>
         <Table
@@ -146,12 +134,6 @@ export default function ReportsPage({params}: {params: {locale: string}}) {
               onClick={() => window.open(`/api/reports/csv?type=vendor&start=${start}&end=${end}&locale=${params.locale}`)}
             >
               {common('exportCsv')}
-            </Button>
-            <Button
-              variant="secondary"
-              onClick={() => window.open(`/api/reports/pdf?type=vendor&start=${start}&end=${end}&locale=${params.locale}`)}
-            >
-              {common('exportPdf')}
             </Button>
           </div>
         </div>

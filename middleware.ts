@@ -1,7 +1,14 @@
 import type {NextRequest} from 'next/server';
 import {NextResponse} from 'next/server';
+import createIntlMiddleware from 'next-intl/middleware';
 import {locales, defaultLocale} from './lib/locales';
 import {verifyAuthToken} from './lib/auth';
+
+const intlMiddleware = createIntlMiddleware({
+  locales,
+  defaultLocale,
+  localePrefix: 'always'
+});
 
 const publicPaths = ['/login'];
 
@@ -35,14 +42,13 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  const intlResponse = intlMiddleware(request);
+  if (intlResponse.headers.get('location')) {
+    return intlResponse;
+  }
+
   const locale = pathname.split('/')[1];
   const isLocalePath = locales.includes(locale as any);
-
-  if (!isLocalePath) {
-    const url = request.nextUrl.clone();
-    url.pathname = `/${defaultLocale}${pathname}`;
-    return NextResponse.redirect(url);
-  }
 
   if (isPublicPath(pathname)) {
     const token = request.cookies.get('auth')?.value;
@@ -54,7 +60,7 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(url);
       }
     }
-    return NextResponse.next();
+    return intlResponse;
   }
 
   const token = request.cookies.get('auth')?.value;
@@ -71,9 +77,9 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  return NextResponse.next();
+  return intlResponse;
 }
 
 export const config = {
-  matcher: ['/((?!_next|favicon.ico).*)']
+  matcher: ['/((?!_next|favicon.ico|.*\\..*).*)']
 };
