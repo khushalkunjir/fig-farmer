@@ -6,6 +6,8 @@ import Vendor from '@/models/Vendor';
 import {formatDate} from '@/lib/utils';
 import {getMessages, normalizeLocale} from '@/lib/messages';
 
+export const runtime = 'nodejs';
+
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const type = url.searchParams.get('type') || 'daily';
