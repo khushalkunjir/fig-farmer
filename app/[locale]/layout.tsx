@@ -3,7 +3,7 @@ import {Merriweather, Noto_Serif_Devanagari} from 'next/font/google';
 import {NextIntlClientProvider} from 'next-intl';
 import {getMessages} from 'next-intl/server';
 import Header from '@/components/Header';
-import type {Locale} from '@/i18n';
+import type {Locale} from '@/lib/locales';
 
 const merriweather = Merriweather({
   subsets: ['latin'],
