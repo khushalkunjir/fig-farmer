@@ -5,6 +5,7 @@ import {useTranslations} from 'next-intl';
 import {Button} from '@/components/Button';
 import {FormRow} from '@/components/FormRow';
 import {Table} from '@/components/Table';
+import Pagination from '@/components/Pagination';
 
 interface BoxType {
   _id: string;
@@ -18,6 +19,8 @@ export default function BoxTypesPage() {
   const [boxTypes, setBoxTypes] = useState<BoxType[]>([]);
   const [form, setForm] = useState({name: '', defaultQtyPerBox: ''});
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
+  const pageSize = 20;
 
   async function load() {
     const res = await fetch('/api/box-types');
@@ -28,6 +31,10 @@ export default function BoxTypesPage() {
   useEffect(() => {
     load();
   }, []);
+
+  useEffect(() => {
+    setPage(1);
+  }, [boxTypes]);
 
   function reset() {
     setForm({name: '', defaultQtyPerBox: ''});
@@ -60,6 +67,9 @@ export default function BoxTypesPage() {
     load();
   }
 
+  const totalPages = Math.max(1, Math.ceil(boxTypes.length / pageSize));
+  const pagedBoxTypes = boxTypes.slice((page - 1) * pageSize, page * pageSize);
+
   return (
     <div className="flex flex-col gap-6">
       <h1 className="text-2xl font-bold text-fig-800">{t('title')}</h1>
@@ -87,7 +97,7 @@ export default function BoxTypesPage() {
       <Table
         headers={[t('name'), t('defaultQtyPerBox'), common('actions')]}
         emptyMessage={common('noData')}
-        rows={boxTypes.map((box) => [
+        rows={pagedBoxTypes.map((box) => [
           box.name,
           box.defaultQtyPerBox ?? '-',
           <div className="flex gap-2" key={`${box._id}-actions`}>
@@ -108,6 +118,16 @@ export default function BoxTypesPage() {
             </Button>
           </div>
         ])}
+      />
+      <Pagination
+        page={page}
+        pageSize={pageSize}
+        total={boxTypes.length}
+        onChange={(next) => setPage(Math.min(Math.max(next, 1), totalPages))}
+        prevLabel={common('prev')}
+        nextLabel={common('next')}
+        pageLabel={common('page')}
+        ofLabel={common('of')}
       />
     </div>
   );

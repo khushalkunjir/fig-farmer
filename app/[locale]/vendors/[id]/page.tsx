@@ -4,6 +4,7 @@ import {useEffect, useState} from 'react';
 import {useTranslations} from 'next-intl';
 import {formatCurrency, formatDate, sumLineItems} from '@/lib/utils';
 import {Table} from '@/components/Table';
+import Pagination from '@/components/Pagination';
 
 interface Vendor {
   _id: string;
@@ -19,6 +20,8 @@ export default function VendorDetailPage({params}: {params: {id: string}}) {
   const salesT = useTranslations('sales');
   const [vendor, setVendor] = useState<Vendor | null>(null);
   const [sales, setSales] = useState<any[]>([]);
+  const [page, setPage] = useState(1);
+  const pageSize = 20;
 
   useEffect(() => {
     async function load() {
@@ -34,6 +37,10 @@ export default function VendorDetailPage({params}: {params: {id: string}}) {
     load();
   }, [params.id]);
 
+  useEffect(() => {
+    setPage(1);
+  }, [sales]);
+
   if (!vendor) {
     return <div>{common('loading')}</div>;
   }
@@ -42,6 +49,9 @@ export default function VendorDetailPage({params}: {params: {id: string}}) {
   const confirmedTotal = sales
     .filter((entry) => entry.status === 'CONFIRMED')
     .reduce((sum, entry) => sum + (entry.finalAmount || 0), 0);
+
+  const totalPages = Math.max(1, Math.ceil(sales.length / pageSize));
+  const pagedSales = sales.slice((page - 1) * pageSize, page * pageSize);
 
   return (
     <div className="flex flex-col gap-6">
@@ -63,7 +73,7 @@ export default function VendorDetailPage({params}: {params: {id: string}}) {
         <Table
           headers={[common('date'), common('status'), common('totalBoxes'), common('totalQuantity'), salesT('finalAmount')]}
           emptyMessage={common('noData')}
-          rows={sales.map((entry) => {
+          rows={pagedSales.map((entry) => {
             const totals = sumLineItems(entry.items);
             return [
               formatDate(entry.date),
@@ -73,6 +83,16 @@ export default function VendorDetailPage({params}: {params: {id: string}}) {
               entry.finalAmount ? formatCurrency(entry.finalAmount) : '-'
             ];
           })}
+        />
+        <Pagination
+          page={page}
+          pageSize={pageSize}
+          total={sales.length}
+          onChange={(next) => setPage(Math.min(Math.max(next, 1), totalPages))}
+          prevLabel={common('prev')}
+          nextLabel={common('next')}
+          pageLabel={common('page')}
+          ofLabel={common('of')}
         />
       </div>
     </div>

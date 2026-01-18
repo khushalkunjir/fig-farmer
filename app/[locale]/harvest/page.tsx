@@ -5,6 +5,7 @@ import {useTranslations} from 'next-intl';
 import {Button} from '@/components/Button';
 import {FormRow} from '@/components/FormRow';
 import {Table} from '@/components/Table';
+import Pagination from '@/components/Pagination';
 import {formatDate, sumLineItems} from '@/lib/utils';
 
 interface BoxType {
@@ -22,6 +23,8 @@ export default function HarvestPage() {
   const [notes, setNotes] = useState('');
   const [items, setItems] = useState([{boxTypeId: '', qtyPerBox: 1, boxCount: 1}]);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
+  const pageSize = 20;
   const [start, setStart] = useState('');
   const [end, setEnd] = useState('');
 
@@ -39,6 +42,10 @@ export default function HarvestPage() {
   useEffect(() => {
     load();
   }, [start, end]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [entries]);
 
   function updateItem(index: number, patch: Partial<typeof items[number]>) {
     setItems((prev) =>
@@ -105,6 +112,8 @@ export default function HarvestPage() {
   }
 
   const totals = useMemo(() => sumLineItems(items), [items]);
+  const totalPages = Math.max(1, Math.ceil(entries.length / pageSize));
+  const pagedEntries = entries.slice((page - 1) * pageSize, page * pageSize);
 
   return (
     <div className="flex flex-col gap-6">
@@ -151,7 +160,7 @@ export default function HarvestPage() {
                 min="1"
                 placeholder={t('qtyPerBox')}
                 value={item.qtyPerBox}
-                onChange={(e) => updateItem(index, {qtyPerBox: e.target.value})}
+                onChange={(e) => updateItem(index, {qtyPerBox: Number(e.target.value)})}
                 required
               />
               <input
@@ -159,7 +168,7 @@ export default function HarvestPage() {
                 min="1"
                 placeholder={t('boxCount')}
                 value={item.boxCount}
-                onChange={(e) => updateItem(index, {boxCount: e.target.value})}
+                onChange={(e) => updateItem(index, {boxCount: Number(e.target.value)})}
                 required
               />
               <Button variant="danger" onClick={() => removeItem(index)}>
@@ -203,7 +212,7 @@ export default function HarvestPage() {
         <Table
           headers={[common('date'), common('totalBoxes'), common('totalQuantity'), common('notes'), common('actions')]}
           emptyMessage={common('noData')}
-          rows={entries.map((entry) => {
+          rows={pagedEntries.map((entry) => {
             const totals = sumLineItems(entry.items);
             return [
               formatDate(entry.date),
@@ -220,6 +229,16 @@ export default function HarvestPage() {
               </div>
             ];
           })}
+        />
+        <Pagination
+          page={page}
+          pageSize={pageSize}
+          total={entries.length}
+          onChange={(next) => setPage(Math.min(Math.max(next, 1), totalPages))}
+          prevLabel={common('prev')}
+          nextLabel={common('next')}
+          pageLabel={common('page')}
+          ofLabel={common('of')}
         />
       </div>
     </div>

@@ -58,7 +58,7 @@ export async function GET(request: Request) {
     doc.end();
   });
 
-  return new NextResponse(buffer, {
+  return new NextResponse(buffer as unknown as ArrayBuffer, {
     headers: {
       'Content-Type': 'application/pdf',
       'Content-Disposition': `attachment; filename="report-${type}.pdf"`

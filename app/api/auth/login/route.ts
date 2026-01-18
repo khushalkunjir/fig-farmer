@@ -1,7 +1,8 @@
 import {NextResponse} from 'next/server';
 import {connectToDatabase} from '@/lib/db';
 import AdminUser from '@/models/AdminUser';
-import {verifyPassword, signAuthToken, getAuthCookieName, getAuthCookieOptions} from '@/lib/auth';
+import {signAuthToken, getAuthCookieName, getAuthCookieOptions} from '@/lib/auth';
+import {verifyPassword} from '@/lib/password';
 import {loginSchema} from '@/lib/validators';
 
 export async function POST(request: Request) {

@@ -5,7 +5,7 @@ import Vendor from '../models/Vendor';
 import BoxType from '../models/BoxType';
 import HarvestEntry from '../models/HarvestEntry';
 import SaleEntry from '../models/SaleEntry';
-import {hashPassword} from '../lib/auth';
+import {hashPassword} from '../lib/password';
 
 config();
 

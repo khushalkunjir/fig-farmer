@@ -28,7 +28,11 @@
     "loading": "लोड होत आहे...",
     "noData": "माहिती नाही",
     "exportCsv": "CSV निर्यात",
-    "exportPdf": "PDF निर्यात"
+    "exportPdf": "PDF निर्यात",
+    "prev": "मागे",
+    "next": "पुढे",
+    "page": "पृष्ठ",
+    "of": "चे"
   },
   "login": {
     "title": "प्रशासक लॉगिन",

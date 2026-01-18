@@ -5,6 +5,7 @@ import {useTranslations} from 'next-intl';
 import {Button} from '@/components/Button';
 import {FormRow} from '@/components/FormRow';
 import {Table} from '@/components/Table';
+import Pagination from '@/components/Pagination';
 import {formatCurrency, formatDate, sumLineItems} from '@/lib/utils';
 
 interface Vendor {
@@ -31,6 +32,8 @@ export default function SalesPage() {
   const [notes, setNotes] = useState('');
   const [items, setItems] = useState([{boxTypeId: '', qtyPerBox: 1, boxCount: 1}]);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
+  const pageSize = 20;
   const [start, setStart] = useState('');
   const [end, setEnd] = useState('');
   const [status, setStatus] = useState('');
@@ -53,6 +56,10 @@ export default function SalesPage() {
   useEffect(() => {
     load();
   }, [start, end, status, filterVendor]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [entries]);
 
   function updateItem(index: number, patch: Partial<typeof items[number]>) {
     setItems((prev) =>
@@ -128,6 +135,8 @@ export default function SalesPage() {
   }
 
   const totals = useMemo(() => sumLineItems(items), [items]);
+  const totalPages = Math.max(1, Math.ceil(entries.length / pageSize));
+  const pagedEntries = entries.slice((page - 1) * pageSize, page * pageSize);
 
   return (
     <div className="flex flex-col gap-6">
@@ -196,7 +205,7 @@ export default function SalesPage() {
                 min="1"
                 placeholder={t('qtyPerBox')}
                 value={item.qtyPerBox}
-                onChange={(e) => updateItem(index, {qtyPerBox: e.target.value})}
+                onChange={(e) => updateItem(index, {qtyPerBox: Number(e.target.value)})}
                 required
               />
               <input
@@ -204,7 +213,7 @@ export default function SalesPage() {
                 min="1"
                 placeholder={t('boxCount')}
                 value={item.boxCount}
-                onChange={(e) => updateItem(index, {boxCount: e.target.value})}
+                onChange={(e) => updateItem(index, {boxCount: Number(e.target.value)})}
                 required
               />
               <Button variant="danger" onClick={() => removeItem(index)}>
@@ -275,7 +284,7 @@ export default function SalesPage() {
             common('actions')
           ]}
           emptyMessage={common('noData')}
-          rows={entries.map((entry) => {
+          rows={pagedEntries.map((entry) => {
             const totals = sumLineItems(entry.items);
             const vendorName = vendors.find((vendor) => vendor._id === entry.vendorId)?.name || '-';
             return [
@@ -295,6 +304,16 @@ export default function SalesPage() {
               </div>
             ];
           })}
+        />
+        <Pagination
+          page={page}
+          pageSize={pageSize}
+          total={entries.length}
+          onChange={(next) => setPage(Math.min(Math.max(next, 1), totalPages))}
+          prevLabel={common('prev')}
+          nextLabel={common('next')}
+          pageLabel={common('page')}
+          ofLabel={common('of')}
         />
       </div>
     </div>

@@ -8,7 +8,7 @@
 
 body {
   @apply bg-fig-50 text-fig-900;
-  font-family: "Merriweather", "Georgia", serif;
+  font-family: var(--font-merriweather), var(--font-devanagari), "Georgia", serif;
 }
 
 input, select, textarea {

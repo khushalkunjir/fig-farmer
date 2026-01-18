@@ -4,6 +4,7 @@ import {useEffect, useState} from 'react';
 import {useTranslations} from 'next-intl';
 import {Button} from '@/components/Button';
 import {Table} from '@/components/Table';
+import Pagination from '@/components/Pagination';
 import {formatCurrency, formatDate, sumLineItems} from '@/lib/utils';
 
 export default function PendingPage() {
@@ -14,6 +15,8 @@ export default function PendingPage() {
   const [vendors, setVendors] = useState<any[]>([]);
   const [finalAmount, setFinalAmount] = useState<Record<string, string>>({});
   const [confirmationDate, setConfirmationDate] = useState<Record<string, string>>({});
+  const [page, setPage] = useState(1);
+  const pageSize = 20;
 
   async function load() {
     const [salesRes, vendorRes] = await Promise.all([
@@ -29,6 +32,10 @@ export default function PendingPage() {
   useEffect(() => {
     load();
   }, []);
+
+  useEffect(() => {
+    setPage(1);
+  }, [entries]);
 
   async function confirmSale(id: string) {
     const amount = finalAmount[id];
@@ -47,6 +54,9 @@ export default function PendingPage() {
     load();
   }
 
+  const totalPages = Math.max(1, Math.ceil(entries.length / pageSize));
+  const pagedEntries = entries.slice((page - 1) * pageSize, page * pageSize);
+
   return (
     <div className="flex flex-col gap-6">
       <h1 className="text-2xl font-bold text-fig-800">{t('title')}</h1>
@@ -63,7 +73,7 @@ export default function PendingPage() {
           common('actions')
         ]}
         emptyMessage={common('noData')}
-        rows={entries.map((entry) => {
+        rows={pagedEntries.map((entry) => {
           const totals = sumLineItems(entry.items);
           const vendorName = vendors.find((vendor) => vendor._id === entry.vendorId)?.name || '-';
           return [
@@ -90,6 +100,16 @@ export default function PendingPage() {
             </Button>
           ];
         })}
+      />
+      <Pagination
+        page={page}
+        pageSize={pageSize}
+        total={entries.length}
+        onChange={(next) => setPage(Math.min(Math.max(next, 1), totalPages))}
+        prevLabel={common('prev')}
+        nextLabel={common('next')}
+        pageLabel={common('page')}
+        ofLabel={common('of')}
       />
     </div>
   );

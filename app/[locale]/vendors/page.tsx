@@ -6,6 +6,7 @@ import {useTranslations} from 'next-intl';
 import {Button} from '@/components/Button';
 import {FormRow} from '@/components/FormRow';
 import {Table} from '@/components/Table';
+import Pagination from '@/components/Pagination';
 
 interface Vendor {
   _id: string;
@@ -21,6 +22,8 @@ export default function VendorsPage({params}: {params: {locale: string}}) {
   const [vendors, setVendors] = useState<Vendor[]>([]);
   const [form, setForm] = useState({name: '', phone: '', location: '', notes: ''});
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
+  const pageSize = 20;
 
   async function load() {
     const res = await fetch('/api/vendors');
@@ -31,6 +34,10 @@ export default function VendorsPage({params}: {params: {locale: string}}) {
   useEffect(() => {
     load();
   }, []);
+
+  useEffect(() => {
+    setPage(1);
+  }, [vendors]);
 
   function reset() {
     setForm({name: '', phone: '', location: '', notes: ''});
@@ -57,6 +64,9 @@ export default function VendorsPage({params}: {params: {locale: string}}) {
     await fetch(`/api/vendors/${id}`, {method: 'DELETE'});
     load();
   }
+
+  const totalPages = Math.max(1, Math.ceil(vendors.length / pageSize));
+  const pagedVendors = vendors.slice((page - 1) * pageSize, page * pageSize);
 
   return (
     <div className="flex flex-col gap-6">
@@ -88,7 +98,7 @@ export default function VendorsPage({params}: {params: {locale: string}}) {
       <Table
         headers={[t('name'), t('phone'), t('location'), common('actions')]}
         emptyMessage={common('noData')}
-        rows={vendors.map((vendor) => [
+        rows={pagedVendors.map((vendor) => [
           <Link key={vendor._id} href={`/${params.locale}/vendors/${vendor._id}`} className="text-fig-700 hover:text-fig-900">
             {vendor.name}
           </Link>,
@@ -114,6 +124,16 @@ export default function VendorsPage({params}: {params: {locale: string}}) {
             </Button>
           </div>
         ])}
+      />
+      <Pagination
+        page={page}
+        pageSize={pageSize}
+        total={vendors.length}
+        onChange={(next) => setPage(Math.min(Math.max(next, 1), totalPages))}
+        prevLabel={common('prev')}
+        nextLabel={common('next')}
+        pageLabel={common('page')}
+        ofLabel={common('of')}
       />
     </div>
   );
