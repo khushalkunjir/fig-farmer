@@ -1,6 +1,6 @@
 import en from '@/messages/en.json';
 import mr from '@/messages/mr.json';
-import {Locale, defaultLocale} from '@/i18n';
+import {Locale, defaultLocale} from '@/lib/locales';
 
 export function getMessages(locale?: string) {
   if (locale === 'mr') return mr;
