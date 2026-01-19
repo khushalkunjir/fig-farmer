@@ -21,7 +21,7 @@ export default function HarvestPage() {
   const [entries, setEntries] = useState<any[]>([]);
   const [date, setDate] = useState(formatDate(new Date()));
   const [notes, setNotes] = useState('');
-  const [items, setItems] = useState([{boxTypeId: '', qtyPerBox: 1, boxCount: 1}]);
+  const [items, setItems] = useState([{boxTypeId: '', qtyPerBox: '', boxCount: ''}]);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const pageSize = 20;
@@ -54,7 +54,7 @@ export default function HarvestPage() {
   }
 
   function addItem() {
-    setItems([...items, {boxTypeId: '', qtyPerBox: 1, boxCount: 1}]);
+    setItems([...items, {boxTypeId: '', qtyPerBox: '', boxCount: ''}]);
   }
 
   function removeItem(index: number) {
@@ -82,7 +82,7 @@ export default function HarvestPage() {
 
     if (res.ok) {
       setNotes('');
-      setItems([{boxTypeId: '', qtyPerBox: 1, boxCount: 1}]);
+      setItems([{boxTypeId: '', qtyPerBox: '', boxCount: ''}]);
       setEditingId(null);
       load();
     }
@@ -92,13 +92,13 @@ export default function HarvestPage() {
     setEditingId(entry._id);
     setDate(formatDate(entry.date));
     setNotes(entry.notes || '');
-    setItems(
-      entry.items.map((item: any) => ({
-        boxTypeId: item.boxTypeId,
-        qtyPerBox: item.qtyPerBox,
-        boxCount: item.boxCount
-      }))
-    );
+      setItems(
+        entry.items.map((item: any) => ({
+          boxTypeId: item.boxTypeId,
+          qtyPerBox: item.qtyPerBox.toString(),
+          boxCount: item.boxCount.toString()
+        }))
+      );
   }
 
   async function handleDelete(id: string) {
@@ -106,12 +106,21 @@ export default function HarvestPage() {
     if (editingId === id) {
       setEditingId(null);
       setNotes('');
-      setItems([{boxTypeId: '', qtyPerBox: 1, boxCount: 1}]);
+      setItems([{boxTypeId: '', qtyPerBox: '', boxCount: ''}]);
     }
     load();
   }
 
-  const totals = useMemo(() => sumLineItems(items), [items]);
+  const totals = useMemo(
+    () =>
+      sumLineItems(
+        items.map((item) => ({
+          qtyPerBox: Number(item.qtyPerBox) || 0,
+          boxCount: Number(item.boxCount) || 0
+        }))
+      ),
+    [items]
+  );
   const totalPages = Math.max(1, Math.ceil(entries.length / pageSize));
   const pagedEntries = entries.slice((page - 1) * pageSize, page * pageSize);
 
@@ -135,6 +144,12 @@ export default function HarvestPage() {
         </div>
 
         <div className="flex flex-col gap-3">
+          <div className="grid gap-3 text-xs font-semibold uppercase text-fig-600 md:grid-cols-4">
+            <div>{t('boxType')}</div>
+            <div>{t('qtyPerBox')}</div>
+            <div>{t('boxCount')}</div>
+            <div>{common('actions')}</div>
+          </div>
           {items.map((item, index) => (
             <div key={index} className="grid gap-3 md:grid-cols-4">
               <select
@@ -143,7 +158,7 @@ export default function HarvestPage() {
                   const selected = boxTypes.find((box) => box._id === e.target.value);
                   updateItem(index, {
                     boxTypeId: e.target.value,
-                    qtyPerBox: selected?.defaultQtyPerBox ?? item.qtyPerBox
+                    qtyPerBox: selected?.defaultQtyPerBox?.toString() ?? item.qtyPerBox
                   });
                 }}
                 required
@@ -160,7 +175,7 @@ export default function HarvestPage() {
                 min="1"
                 placeholder={t('qtyPerBox')}
                 value={item.qtyPerBox}
-                onChange={(e) => updateItem(index, {qtyPerBox: Number(e.target.value)})}
+                onChange={(e) => updateItem(index, {qtyPerBox: e.target.value})}
                 required
               />
               <input
@@ -168,7 +183,7 @@ export default function HarvestPage() {
                 min="1"
                 placeholder={t('boxCount')}
                 value={item.boxCount}
-                onChange={(e) => updateItem(index, {boxCount: Number(e.target.value)})}
+                onChange={(e) => updateItem(index, {boxCount: e.target.value})}
                 required
               />
               <Button variant="danger" onClick={() => removeItem(index)}>
@@ -190,7 +205,7 @@ export default function HarvestPage() {
               onClick={() => {
                 setEditingId(null);
                 setNotes('');
-                setItems([{boxTypeId: '', qtyPerBox: 1, boxCount: 1}]);
+                setItems([{boxTypeId: '', qtyPerBox: '', boxCount: ''}]);
               }}
             >
               {common('cancel')}
